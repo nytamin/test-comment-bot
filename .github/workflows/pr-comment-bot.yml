@@ -30,9 +30,9 @@ jobs:
               ### Other
 
               This is my context:
-              ```json
+              \`\`\`json
               ${JSON.stringify(context, null, 2)}
-              ```
+              \`\`\`
               
               
               _Beep boop, I'm a bot, modify my source code here: URL_
