@@ -16,31 +16,42 @@ jobs:
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
+          
             if (context.payload.action === 'opened' && context.payload.pull_request) {
               github.rest.issues.createComment({
                 issue_number: context.issue.number,
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                body: `Thanks for opening this Pull Request!
-  
-                ### Pull Request
-  
-                bla bla
-                
-                ### Contribution Guidelines
-  
-                more info.
-                
-                ### Other
-  
-                This is my context:
-                \`\`\`json
-                ${JSON.stringify(context, null, 2)}
-                \`\`\`
-                
-                
-                _Beep boop, I'm a bot, modify my source code here: URL_
-                `
+                body: `
+Thanks for opening this Pull Request!
+
+### Pull Request
+
+When a Pull Request is opened, here's what happens:
+
+1. The [Code Owners](https://github.com/orgs/Sofie-Automation/teams/code-owners) team is automatically requested for review of this PR.
+   The Code Owners have one week to decide whether their organisation is interested in this PR, at which point they will request further reviews.
+2. The Pull Request can be merged if
+    - All required reviews have been approved
+    - OR: no one has reviewed the PR after three weeks
+
+### Contribution Guidelines
+
+Be sure to read the [Contribution Guidelines](https://github.com/Sofie-Automation/sofie-core/blob/main/CONTRIBUTING.md).
+
+
+
+_Beep boop! I'm a bot, my source code is here: [Github Actions](${
+		context.payload.repository.url
+	}/blob/main/.github/workflows)
+
+
+	
+<!--
+Context:
+${JSON.stringify(context, null, 2)}
+-->
+`
               })
             } else {
             
